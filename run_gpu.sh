@@ -8,7 +8,7 @@
 module load gcc/11.2.0 cuda/12.6
 module load mvapich-plus/4.1rc
 module li
-top_dir=/home/michalowicz.2/MVP-things/MVP-build
+top_dir=/opt/mvapich-plus/4.1rc
 omb_dir=$top_dir/libexec/osu-micro-benchmarks/mpi/collective
 
 ppn=1 # One GPU/node
