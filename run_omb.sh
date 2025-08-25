@@ -1,7 +1,15 @@
 #!/bin/bash
+#SBATCH -p batch-bdw-v100
+#SBATCH -J "Pt2pt-with-MVAPICH-Plus-4.1"
+#SBAtCH -o "%j-Pt2pt-MVP-4.1.out"
+#SBATCH -t 30:00
 
-module load gcc/7.5.0
 
+module load gcc/11.2.0 cuda/12.6
+module load mvapich-plus/4.1rc
+module li
+top_dir=/opt/mvapich-plus/4.1rc
+omb_dir=$top_dir/libexec/osu-micro-benchmarks/mpi/collective
 if [[ $SLURM_NODEID != 0 ]]; then
     exit;
 fi
@@ -11,13 +19,13 @@ for i in `scontrol show hostnames $SLURM_NODELIST`; do
   hosts+=($i);
 done
 
-MPI=/opt/mvapich2/mvapich2-2.3.7
+MPI=$top_dir
 
 for bench in osu_latency osu_bw osu_bibw
 do
     set -x
 
-    $MPI/bin/mpirun_rsh -np 2 ${hosts[0]} ${hosts[1]} MV2_HOMOGENEOUS_CLUSTER=1 MV2_IBA_HCA=mlx5_0 $MPI/libexec/osu-micro-benchmarks/mpi/pt2pt/$bench
+    $MPI/bin/mpirun -np 2 -ppn 1 -genv UCX_NET_DEVICES=mlx5_0:1 $MPI/libexec/osu-micro-benchmarks/mpi/pt2pt/$bench
 
     { set +x; } 2>/dev/null
 done
