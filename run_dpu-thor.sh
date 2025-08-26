@@ -1,10 +1,10 @@
 #!/bin/bash
 #SBATCH -N4
-#SBATCH -p rome
+#SBATCH -p thor
 #SBATCH -t 15:00
 #SBATCH -J "Ialltoall demo"
 #SBATCH -o "%j-ialltoall-output.txt"
-#SBATCH -w rome[005-006],romebf3a[005-006]
+#SBATCH -w thor[017-018],thorbf3a[017,018]
 ##SBATCH
 if [[ $SLURM_NODEID != 0 ]]; then
     exit;
