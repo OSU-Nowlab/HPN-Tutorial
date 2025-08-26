@@ -11,7 +11,7 @@ if [[ $SLURM_NODEID != 0 ]]; then
 fi
 
 SUB="bf"
-ppn=2
+ppn=16
 hosts=()
 hostfile="$HOME/hosts-$SLURM_JOBID"
 dpufile="$HOME/dpu-$SLURM_JOBID"
