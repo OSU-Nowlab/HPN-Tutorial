@@ -46,7 +46,10 @@ len=${#names[@]}
 #cat $dpufile
 
 
-MPI=/global/scratch/users/subramoni/Ben/tutorial-things/MV2-DPU-build
+MPI=/global/home/users/benjaminm/MV2-DPU-Build
+
+export PATH=$MPI/bin:$PATH
+export LD_LIBRARY_PATH=$MPI/lib:$LD_LIBRARY_PATH
 
 for (( i=0; i<$len; i++ ))
 do
@@ -61,6 +64,21 @@ do
 
     { set +x; } 2>/dev/null
 done
+
+for (( i=0; i<$len; i++ ))
+do
+    env=${envs[$i]}
+    name=${names[$i]}
+    echo -e "\n\nRunning MPI_Ibcast with $np processes with $name"
+    set -x
+
+    $MPI/bin/mpirun_rsh --export-all -np $np -hostfile $hostfile -dpufile $dpufile -bf3 $env \
+        $MPI/libexec/osu-micro-benchmarks/mpi/collective/osu_ibcast \
+        -f -m $((1024*1024)):$((32*1024*1024)) #2>/dev/null
+
+    { set +x; } 2>/dev/null
+done
+
 
 
 rm $hostfile
