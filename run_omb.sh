@@ -1,5 +1,6 @@
 #!/bin/bash
 #SBATCH -p batch-bdw-v100
+#SBATCH --reservation="ibtutorial"
 #SBATCH -J "Pt2pt-with-MVAPICH-Plus-4.1"
 #SBAtCH -o "%j-Pt2pt-MVP-4.1.out"
 #SBATCH -t 30:00
