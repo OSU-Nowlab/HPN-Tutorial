@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH -p batch-bdw-v100
-##SBATCH --reservation="ibtutorial"
+#SBATCH --reservation="ibtutorial"
 #SBATCH -J "GPU-Aware-MPI demo"
 #SBATCH -t 40:00
 #SBATCH -o "%j-GPU-Aware-demo.txt"
