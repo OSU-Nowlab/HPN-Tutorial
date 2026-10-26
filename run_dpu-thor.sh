@@ -15,6 +15,10 @@ ppn=16
 hosts=()
 hostfile="$HOME/hosts-$SLURM_JOBID"
 dpufile="$HOME/dpu-$SLURM_JOBID"
+rm -f $hostfile
+rm -f $dpufile
+touch $hostfile
+touch $dpufile
 for i in `scontrol show hostname`; do
     if [[ "$i" == *"$SUB"* ]] ; then
         echo "$i" >> $dpufile
