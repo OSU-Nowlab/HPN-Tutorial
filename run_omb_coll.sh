@@ -2,7 +2,7 @@
 #SBATCH -p batch-bdw-v100
 #SBATCH --reservation="ibtutorial"
 #SBATCH -J "Pt2pt-with-MVAPICH-Plus-4.1"
-#SBAtCH -o "%j-Pt2pt-MVP-4.1.out"
+#SBAtCH -o "%j-Coll-MVP-4.1.out"
 #SBATCH -t 30:00
 
 
@@ -31,6 +31,7 @@ MPI=$top_dir
 
 for coll in recursive_doubling ring
 do
+    echo "Running osu_allgather at $SLURM_NNODES nodes/$ppn ppn with algorithm $coll..."
     set -x
 
     $MPI/bin/mpirun -np $np -ppn $ppn -genv UCX_NET_DEVICES=mlx5_0:1 \
